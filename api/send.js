@@ -1,4 +1,3 @@
-// api/send.js
 import { initializeApp, cert } from "firebase-admin/app";
 import { getMessaging } from "firebase-admin/messaging";
 
@@ -18,7 +17,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { topic, token, title, body } = req.body;
+        const { topic, token, title, body, data } = req.body;
 
         if ((!topic && !token) || !title || !body) {
             return res.status(400).json({
@@ -28,6 +27,7 @@ export default async function handler(req, res) {
 
         const message = {
             notification: { title, body },
+            data: data || {},
             ...(topic ? { topic } : { token }),
         };
 

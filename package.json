@@ -1,24 +1,26 @@
 {
   "name": "digital_backend",
   "version": "1.0.0",
-  "type": "module",
-  "main": "index.js",
+  "description": "Backend API for Digital Market app notifications",
+  "main": "api/send.js",
   "scripts": {
-    "dev": "vercel dev"
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "echo 'Serverless functions'"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zephy4/digital_backend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zephy4/digital_backend/issues"
-  },
-  "homepage": "https://github.com/zephy4/digital_backend#readme",
-  "description": "",
   "dependencies": {
     "firebase-admin": "^13.5.0"
-  }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "firebase",
+    "fcm",
+    "notifications",
+    "vercel",
+    "serverless"
+  ],
+  "author": "Ismaeel",
+  "license": "MIT"
 }
