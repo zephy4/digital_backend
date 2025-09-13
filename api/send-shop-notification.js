@@ -24,7 +24,7 @@ export default async function handler(req, res) {
             productId,
             productImage,
             productPrice,
-            productDescription
+            productDescription,
         } = req.body;
 
         if (!shopId || !shopName || !productName || !productId) {
@@ -41,33 +41,35 @@ export default async function handler(req, res) {
             notification: {
                 title,
                 body,
-                imageUrl: productImage || undefined
+                image: productImage || undefined, // ✅ fixed
             },
             data: {
-                type: 'new_product',
-                shopId: shopId,
-                shopName: shopName,
-                productId: productId,
-                productName: productName,
-                productImage: productImage || '',
-                productPrice: productPrice || '',
-                productDescription: productDescription || '',
-                action: 'view_product',
+                type: "new_product",
+                shopId,
+                shopName,
+                productId,
+                productName,
+                productImage: productImage || "",
+                productPrice: productPrice || "",
+                productDescription: productDescription || "",
+                action: "view_product",
                 timestamp: new Date().toISOString(),
             },
-            topic: topic,
+            topic,
         };
 
         const response = await getMessaging().send(message);
 
-        console.log(`Notification sent to shop ${shopName} (${shopId}) for product ${productName}`);
+        console.log(
+            `Notification sent to shop ${shopName} (${shopId}) for product ${productName}`
+        );
 
         res.status(200).json({
             success: true,
             response,
-            topic: topic,
-            shopName: shopName,
-            productName: productName
+            topic,
+            shopName,
+            productName,
         });
     } catch (error) {
         console.error("Error sending shop notification:", error);
