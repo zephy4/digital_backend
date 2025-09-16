@@ -57,22 +57,19 @@ Send a notification to all subscribers of a specific shop when a new product is 
 }
 ```
 
-**Response:**
-```json
-{
-  "success": true,
-  "response": "projects/your-project/messages/0:1234567890",
-  "topic": "shop_123_notifications",
-  "shopName": "My Shop",
-  "productName": "New Product"
-}
-```
+Notes:
+- This endpoint now publishes to the FCM topic `shop_{shopId}_notifications` (matching the mobile app subscription).
+- The `data` payload includes `type: "product"`, `productId`, and `shopId` to drive navigation in the app.
 
 ## Environment Variables
 
 Set these in your Vercel dashboard:
 
-1. `FIREBASE_SERVICE_ACCOUNT_KEY` - Your Firebase service account JSON (as a string)
+1. `FIREBASE_SERVICE_ACCOUNT_KEY` - Your Firebase service account JSON (as a string). Example (do not commit this):
+   ```bash
+   # In Vercel → Project Settings → Environment Variables
+   FIREBASE_SERVICE_ACCOUNT_KEY='{"project_id":"...","client_email":"...","private_key":"-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"}'
+   ```
 
 ## Deployment
 
@@ -102,7 +99,7 @@ curl -X POST https://your-app.vercel.app/api/send \
     "body": "This is a test notification"
   }'
 
-# Test shop notification
+# Test shop notification (topic-based)
 curl -X POST https://your-app.vercel.app/api/send-shop-notification \
   -H "Content-Type: application/json" \
   -d '{
